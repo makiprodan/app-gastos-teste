@@ -161,12 +161,12 @@ export function TransactionFilters({ categories }: TransactionFiltersProps) {
         </div>
 
         {/* Tipo */}
-        <Select value={type} onValueChange={setType}>
+        <Select value={type || "all"} onValueChange={(v) => setType(v === "all" ? "" : v)}>
           <SelectTrigger className="w-full sm:w-[160px]">
             <SelectValue placeholder="Tipo" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todos</SelectItem>
+            <SelectItem value="all">Todos</SelectItem>
             <SelectItem value="EXPENSE">Gastos</SelectItem>
             <SelectItem value="INCOME">Receitas</SelectItem>
           </SelectContent>
@@ -174,14 +174,14 @@ export function TransactionFilters({ categories }: TransactionFiltersProps) {
 
         {/* Período */}
         <Select
-          value={preset}
-          onValueChange={(value) => handlePresetChange(value as PresetPeriod)}
+          value={preset || "all"}
+          onValueChange={(value) => handlePresetChange(value === "all" ? "" : value as PresetPeriod)}
         >
           <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Período" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todos</SelectItem>
+            <SelectItem value="all">Todos</SelectItem>
             <SelectItem value="week">Esta semana</SelectItem>
             <SelectItem value="month">Este mês</SelectItem>
             <SelectItem value="quarter">Últimos 3 meses</SelectItem>
