@@ -76,6 +76,7 @@ export function TransacoesClient({
         transactions={transactions}
         totalPages={totalPages}
         currentPage={currentPage}
+        categories={categories}
       />
     </div>
   );

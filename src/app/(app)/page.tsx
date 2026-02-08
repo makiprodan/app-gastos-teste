@@ -1,10 +1,24 @@
-export default function DashboardPage() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold">Dashboard</h2>
-      <p className="mt-2 text-muted-foreground">
-        Resumo dos seus gastos e receitas.
-      </p>
-    </div>
-  );
+import { getDashboardData } from "@/actions/dashboard";
+import DashboardClient from "./dashboard-client";
+
+interface DashboardPageProps {
+  searchParams: Promise<{
+    month?: string;
+    year?: string;
+  }>;
+}
+
+export default async function DashboardPage({
+  searchParams,
+}: DashboardPageProps) {
+  const params = await searchParams;
+
+  // Default: mês e ano atuais
+  const now = new Date();
+  const month = params.month ? parseInt(params.month) : now.getMonth() + 1;
+  const year = params.year ? parseInt(params.year) : now.getFullYear();
+
+  const data = await getDashboardData(year, month);
+
+  return <DashboardClient {...data} />;
 }
