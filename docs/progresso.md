@@ -2,9 +2,9 @@
 
 > Atualizado ao final de cada sessão.
 
-- **Fase:** Tasks criadas → próxima: Implementação
+- **Fase:** Implementação (Fase 4)
 - **Última sessão:** 2026-02-08
-- **Próxima ação:** Implementar T-001 (setup do projeto)
+- **Próxima ação:** Implementar T-005 (CRUD de categorias)
 
 ## Concluído
 
@@ -12,6 +12,10 @@
 - [x] PRD — requisitos documentados com critérios de aceite
 - [x] Design Doc — arquitetura, modelo de dados, plano de implementação
 - [x] Tasks — 16 tasks atômicas no backlog com critérios de aceite
+- [x] T-001 — Setup Next.js + deps (Clerk, Prisma, shadcn, Recharts)
+- [x] T-002 — Schema Prisma + migration executada no Neon
+- [x] T-003 — Seed de categorias padrão (primeiro acesso)
+- [x] T-004 — Layout responsivo (sidebar desktop + bottom nav mobile)
 
 ## Em Andamento
 
@@ -19,7 +23,9 @@
 
 ## Próximos Passos
 
-1. Implementar MVP (Fase 4) — começar por T-001
+1. T-005 — CRUD de categorias
+2. T-006 — Criar e listar transações
+3. T-007 — Editar e excluir transações
 
 ## Bloqueios
 

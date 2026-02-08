@@ -33,27 +33,27 @@
   - [x] Migration executada no Neon sem erros
 
 ### [T-003] Seed de categorias padrão
-- **Status:** pendente
+- **Status:** concluída
 - **Prioridade:** alta
 - **Depende de:** T-002
 - **Critérios de aceite:**
-  - [ ] Script de seed ou lógica no primeiro acesso
-  - [ ] Categorias: Alimentação, Transporte, Moradia, Lazer, Saúde, Educação, Outros
-  - [ ] Cada categoria com ícone (Lucide) e cor (hex) definidos
-  - [ ] Seed não duplica categorias se executado novamente
+  - [x] Script de seed ou lógica no primeiro acesso
+  - [x] Categorias: Alimentação, Transporte, Moradia, Lazer, Saúde, Educação, Outros
+  - [x] Cada categoria com ícone (Lucide) e cor (hex) definidos
+  - [x] Seed não duplica categorias se executado novamente
 
 ## Fase 2 — Layout
 
 ### [T-004] Layout responsivo e navegação
-- **Status:** pendente
+- **Status:** concluída
 - **Prioridade:** alta
 - **Depende de:** T-001
 - **Critérios de aceite:**
-  - [ ] Layout com sidebar no desktop e bottom navigation no mobile
-  - [ ] Links: Dashboard, Transações, Categorias, Recorrentes, Orçamento
-  - [ ] Header com nome do app e avatar/menu do usuário (Clerk UserButton)
-  - [ ] Responsivo: funcional a partir de 320px
-  - [ ] Navegação destaca a página ativa
+  - [x] Layout com sidebar no desktop e bottom navigation no mobile
+  - [x] Links: Dashboard, Transações, Categorias, Recorrentes, Orçamento
+  - [x] Header com nome do app e avatar/menu do usuário (Clerk UserButton)
+  - [x] Responsivo: funcional a partir de 320px
+  - [x] Navegação destaca a página ativa
 
 ## Fase 3 — Categorias
 
