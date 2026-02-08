@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { seedDefaultCategories } from "@/lib/seed";
+import { checkAndGenerateRecurring } from "@/lib/check-recurring";
 import { Sidebar } from "@/components/sidebar";
 import { BottomNav } from "@/components/bottom-nav";
 import { Header } from "@/components/header";
@@ -13,7 +14,9 @@ export default async function AppLayout({
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
+  // Seed de categorias padrão e verificação de recorrências
   await seedDefaultCategories(userId);
+  await checkAndGenerateRecurring(userId);
 
   return (
     <div className="flex min-h-screen">

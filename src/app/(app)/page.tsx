@@ -1,4 +1,4 @@
-import { getDashboardData } from "@/actions/dashboard";
+import { getDashboardData, getMonthlyHistory } from "@/actions/dashboard";
 import DashboardClient from "./dashboard-client";
 
 interface DashboardPageProps {
@@ -18,7 +18,10 @@ export default async function DashboardPage({
   const month = params.month ? parseInt(params.month) : now.getMonth() + 1;
   const year = params.year ? parseInt(params.year) : now.getFullYear();
 
-  const data = await getDashboardData(year, month);
+  const [data, monthlyHistory] = await Promise.all([
+    getDashboardData(year, month),
+    getMonthlyHistory(year, month),
+  ]);
 
-  return <DashboardClient {...data} />;
+  return <DashboardClient {...data} monthlyHistory={monthlyHistory} />;
 }

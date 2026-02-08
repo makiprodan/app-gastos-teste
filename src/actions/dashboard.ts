@@ -91,3 +91,70 @@ export async function getDashboardData(
     year,
   };
 }
+
+interface MonthlyHistoryItem {
+  month: number;
+  year: number;
+  label: string;
+  expenses: number;
+  income: number;
+}
+
+const MONTH_LABELS = [
+  "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+  "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+];
+
+export async function getMonthlyHistory(
+  year: number,
+  month: number
+): Promise<MonthlyHistoryItem[]> {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("Não autenticado");
+  }
+
+  // Calcular os últimos 6 meses (incluindo o mês atual)
+  const history: MonthlyHistoryItem[] = [];
+
+  for (let i = 5; i >= 0; i--) {
+    const targetDate = new Date(year, month - 1 - i, 1);
+    const targetMonth = targetDate.getMonth() + 1;
+    const targetYear = targetDate.getFullYear();
+
+    const startDate = new Date(targetYear, targetMonth - 1, 1);
+    const endDate = new Date(targetYear, targetMonth, 1);
+
+    // Buscar transações do mês
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId,
+        date: {
+          gte: startDate,
+          lt: endDate,
+        },
+      },
+    });
+
+    let expenses = 0;
+    let income = 0;
+
+    for (const transaction of transactions) {
+      if (transaction.type === "EXPENSE") {
+        expenses += transaction.amount;
+      } else if (transaction.type === "INCOME") {
+        income += transaction.amount;
+      }
+    }
+
+    history.push({
+      month: targetMonth,
+      year: targetYear,
+      label: MONTH_LABELS[targetMonth - 1],
+      expenses,
+      income,
+    });
+  }
+
+  return history;
+}

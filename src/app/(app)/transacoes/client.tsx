@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { TransactionForm } from "@/components/transaction-form";
 import { TransactionList } from "@/components/transaction-list";
+import { TransactionFilters } from "@/components/transaction-filters";
+import { TransactionFilters as FilterType } from "@/actions/transactions";
 
 interface Category {
   id: string;
@@ -34,6 +36,7 @@ interface TransacoesClientProps {
   categories: Category[];
   totalPages: number;
   currentPage: number;
+  filters: FilterType;
 }
 
 export function TransacoesClient({
@@ -41,6 +44,7 @@ export function TransacoesClient({
   categories,
   totalPages,
   currentPage,
+  filters,
 }: TransacoesClientProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -71,6 +75,8 @@ export function TransacoesClient({
           </DialogContent>
         </Dialog>
       </div>
+
+      <TransactionFilters categories={categories} />
 
       <TransactionList
         transactions={transactions}

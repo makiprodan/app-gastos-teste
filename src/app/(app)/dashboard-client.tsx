@@ -11,6 +11,19 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 
 interface CategorySummary {
   categoryId: string;
@@ -20,6 +33,14 @@ interface CategorySummary {
   total: number;
 }
 
+interface MonthlyHistoryItem {
+  month: number;
+  year: number;
+  label: string;
+  expenses: number;
+  income: number;
+}
+
 interface DashboardClientProps {
   totalExpenses: number;
   totalIncome: number;
@@ -27,6 +48,7 @@ interface DashboardClientProps {
   byCategory: CategorySummary[];
   month: number;
   year: number;
+  monthlyHistory: MonthlyHistoryItem[];
 }
 
 const MONTHS = [
@@ -51,6 +73,7 @@ export default function DashboardClient({
   byCategory,
   month,
   year,
+  monthlyHistory,
 }: DashboardClientProps) {
   const router = useRouter();
 
@@ -150,10 +173,125 @@ export default function DashboardClient({
         </Card>
       </div>
 
+      {/* Gráficos */}
+      <div className="grid gap-4 md:grid-cols-2">
+        {/* Gráfico de pizza - Gastos por categoria */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Gastos por Categoria</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {byCategory.length === 0 ? (
+              <div className="h-[300px] flex items-center justify-center">
+                <p className="text-muted-foreground text-center">
+                  Nenhum gasto registrado neste mês
+                </p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={byCategory}
+                    dataKey="total"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label={(entry: any) => {
+                      const percentage =
+                        totalExpenses > 0
+                          ? ((entry.total / totalExpenses) * 100).toFixed(1)
+                          : 0;
+                      return `${entry.name} (${percentage}%)`;
+                    }}
+                  >
+                    {byCategory.map((category) => (
+                      <Cell key={category.categoryId} fill={category.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload as CategorySummary;
+                        const percentage =
+                          totalExpenses > 0
+                            ? ((data.total / totalExpenses) * 100).toFixed(1)
+                            : 0;
+                        return (
+                          <div className="bg-background border rounded-lg p-2 shadow-lg">
+                            <p className="font-medium">{data.name}</p>
+                            <p className="text-sm">
+                              {formatCurrency(data.total)} ({percentage}%)
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Gráfico de barras - Gastos vs Receitas (últimos 6 meses) */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Gastos vs Receitas (Últimos 6 Meses)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {monthlyHistory.every((item) => item.expenses === 0 && item.income === 0) ? (
+              <div className="h-[300px] flex items-center justify-center">
+                <p className="text-muted-foreground text-center">
+                  Nenhuma transação registrada nos últimos 6 meses
+                </p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={monthlyHistory}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="label" />
+                  <YAxis
+                    tickFormatter={(value) => {
+                      // Formatar valores grandes (ex: 1000 -> 1k)
+                      if (value >= 1000) {
+                        return `${(value / 100000).toFixed(0)}k`;
+                      }
+                      return (value / 100).toFixed(0);
+                    }}
+                  />
+                  <Tooltip
+                    content={({ active, payload, label }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="bg-background border rounded-lg p-3 shadow-lg">
+                            <p className="font-medium mb-2">{label}</p>
+                            <p className="text-sm text-green-600">
+                              Receitas: {formatCurrency(payload[1]?.value as number || 0)}
+                            </p>
+                            <p className="text-sm text-red-600">
+                              Gastos: {formatCurrency(payload[0]?.value as number || 0)}
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="expenses" fill="#dc2626" name="Gastos" />
+                  <Bar dataKey="income" fill="#16a34a" name="Receitas" />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Lista de gastos por categoria */}
       <Card>
         <CardHeader>
-          <CardTitle>Gastos por Categoria</CardTitle>
+          <CardTitle>Detalhamento por Categoria</CardTitle>
         </CardHeader>
         <CardContent>
           {byCategory.length === 0 ? (

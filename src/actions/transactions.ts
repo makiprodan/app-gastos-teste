@@ -7,23 +7,63 @@ import { transactionSchema } from "@/lib/validations/transaction";
 
 const ITEMS_PER_PAGE = 20;
 
-export async function getTransactions(page: number = 1) {
+export interface TransactionFilters {
+  page?: number;
+  search?: string;
+  type?: "EXPENSE" | "INCOME";
+  categoryIds?: string[];
+  startDate?: string; // ISO date
+  endDate?: string; // ISO date
+}
+
+export async function getTransactions(filters: TransactionFilters = {}) {
   const { userId } = await auth();
   if (!userId) {
     throw new Error("Não autenticado");
   }
 
+  const page = filters.page || 1;
   const skip = (page - 1) * ITEMS_PER_PAGE;
+
+  // Construir where dinâmico
+  const where: any = { userId };
+
+  if (filters.search) {
+    where.description = {
+      contains: filters.search,
+      mode: "insensitive",
+    };
+  }
+
+  if (filters.type) {
+    where.type = filters.type;
+  }
+
+  if (filters.categoryIds && filters.categoryIds.length > 0) {
+    where.categoryId = {
+      in: filters.categoryIds,
+    };
+  }
+
+  if (filters.startDate || filters.endDate) {
+    where.date = {};
+    if (filters.startDate) {
+      where.date.gte = new Date(filters.startDate);
+    }
+    if (filters.endDate) {
+      where.date.lte = new Date(filters.endDate);
+    }
+  }
 
   const [transactions, total] = await Promise.all([
     prisma.transaction.findMany({
-      where: { userId },
+      where,
       include: { category: true },
       orderBy: { date: "desc" },
       skip,
       take: ITEMS_PER_PAGE,
     }),
-    prisma.transaction.count({ where: { userId } }),
+    prisma.transaction.count({ where }),
   ]);
 
   const totalPages = Math.ceil(total / ITEMS_PER_PAGE);

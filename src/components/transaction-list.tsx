@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,6 +54,7 @@ export function TransactionList({
   categories,
 }: TransactionListProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [editTransaction, setEditTransaction] = useState<Transaction | null>(
     null
   );
@@ -61,7 +62,9 @@ export function TransactionList({
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handlePageChange = (page: number) => {
-    router.push(`/transacoes?page=${page}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
+    router.push(`/transacoes?${params.toString()}`);
   };
 
   const handleDelete = async () => {
