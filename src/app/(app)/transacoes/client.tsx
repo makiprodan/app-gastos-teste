@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -48,6 +48,30 @@ export function TransacoesClient({
 }: TransacoesClientProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const handleExportCsv = () => {
+    // Construir URL com os filtros ativos
+    const params = new URLSearchParams();
+
+    if (filters.search) {
+      params.set("search", filters.search);
+    }
+    if (filters.type) {
+      params.set("type", filters.type);
+    }
+    if (filters.categoryIds && filters.categoryIds.length > 0) {
+      params.set("categoryIds", filters.categoryIds.join(","));
+    }
+    if (filters.startDate) {
+      params.set("startDate", filters.startDate);
+    }
+    if (filters.endDate) {
+      params.set("endDate", filters.endDate);
+    }
+
+    const url = `/api/export/csv?${params.toString()}`;
+    window.location.href = url;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -57,23 +81,29 @@ export function TransacoesClient({
             Gerencie seus gastos e receitas
           </p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Nova
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Nova Transação</DialogTitle>
-            </DialogHeader>
-            <TransactionForm
-              categories={categories}
-              onSuccess={() => setDialogOpen(false)}
-            />
-          </DialogContent>
-        </Dialog>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleExportCsv}>
+            <Download className="mr-2 h-4 w-4" />
+            Exportar CSV
+          </Button>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Nova
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Nova Transação</DialogTitle>
+              </DialogHeader>
+              <TransactionForm
+                categories={categories}
+                onSuccess={() => setDialogOpen(false)}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       <TransactionFilters categories={categories} />

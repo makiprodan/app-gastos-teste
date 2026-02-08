@@ -5,6 +5,7 @@ import { checkAndGenerateRecurring } from "@/lib/check-recurring";
 import { Sidebar } from "@/components/sidebar";
 import { BottomNav } from "@/components/bottom-nav";
 import { Header } from "@/components/header";
+import { PWAPrompt } from "@/components/pwa-prompt";
 
 export default async function AppLayout({
   children,
@@ -26,6 +27,7 @@ export default async function AppLayout({
         <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">{children}</main>
       </div>
       <BottomNav />
+      <PWAPrompt />
     </div>
   );
 }

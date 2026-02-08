@@ -1,0 +1,18 @@
+<svg width="192" height="192" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fundo verde (cor tema do app) -->
+  <rect width="512" height="512" rx="128" fill="#16a34a"/>
+
+  <!-- Símbolo de cifrão simplificado -->
+  <g transform="translate(256, 256)">
+    <!-- Linha vertical do $ -->
+    <rect x="-12" y="-160" width="24" height="320" fill="white" rx="12"/>
+
+    <!-- Parte superior do S -->
+    <path d="M -60 -100 Q -60 -140, 0 -140 Q 60 -140, 60 -100 Q 60 -60, 0 -60"
+          fill="none" stroke="white" stroke-width="40" stroke-linecap="round"/>
+
+    <!-- Parte inferior do S -->
+    <path d="M 0 60 Q -60 60, -60 100 Q -60 140, 0 140 Q 60 140, 60 100"
+          fill="none" stroke="white" stroke-width="40" stroke-linecap="round"/>
+  </g>
+</svg>
