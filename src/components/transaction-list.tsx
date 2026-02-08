@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Pencil, Trash2, ChevronLeft, ChevronRight, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -87,8 +87,14 @@ export function TransactionList({
 
   if (transactions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-muted-foreground">Nenhuma transação encontrada</p>
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="rounded-full bg-muted p-4 mb-4">
+          <Wallet className="h-8 w-8 text-muted-foreground" />
+        </div>
+        <p className="text-lg font-medium">Nenhuma transação encontrada</p>
+        <p className="text-sm text-muted-foreground mt-1">
+          Adicione sua primeira transação para começar a controlar seus gastos.
+        </p>
       </div>
     );
   }

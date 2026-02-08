@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -59,9 +59,15 @@ export function CategoryList({ categories }: CategoryListProps) {
 
   if (categories.length === 0) {
     return (
-      <p className="py-8 text-center text-muted-foreground">
-        Nenhuma categoria encontrada.
-      </p>
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="rounded-full bg-muted p-4 mb-4">
+          <FolderOpen className="h-8 w-8 text-muted-foreground" />
+        </div>
+        <p className="text-lg font-medium">Nenhuma categoria encontrada</p>
+        <p className="text-sm text-muted-foreground mt-1">
+          Crie categorias para organizar suas transações.
+        </p>
+      </div>
     );
   }
 

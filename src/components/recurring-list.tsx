@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil, Power, Trash2 } from "lucide-react";
+import { Pencil, Power, Trash2, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { toggleRecurring, deleteRecurring } from "@/actions/recurring";
 import { Button } from "@/components/ui/button";
@@ -92,9 +92,13 @@ export function RecurringList({
 
   if (recurringTransactions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-muted-foreground">
-          Nenhuma recorrência cadastrada
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="rounded-full bg-muted p-4 mb-4">
+          <RefreshCw className="h-8 w-8 text-muted-foreground" />
+        </div>
+        <p className="text-lg font-medium">Nenhuma recorrência cadastrada</p>
+        <p className="text-sm text-muted-foreground mt-1">
+          Automatize gastos e receitas que se repetem todo mês.
         </p>
       </div>
     );

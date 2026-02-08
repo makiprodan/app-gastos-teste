@@ -16,9 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gastei — Controle de Gastos",
-  description: "App pessoal para controle de gastos, receitas e orçamento",
+  title: "Gastei — Controle de Gastos Pessoais",
+  description: "App para controlar gastos, receitas e orçamento mensal",
   manifest: "/manifest.webmanifest",
+  openGraph: {
+    title: "Gastei — Controle de Gastos Pessoais",
+    description: "App para controlar gastos, receitas e orçamento mensal",
+    type: "website",
+    locale: "pt_BR",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
