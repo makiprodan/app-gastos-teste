@@ -1,10 +1,15 @@
-export default function RecorrentesPage() {
+import { getRecurringTransactions } from "@/actions/recurring";
+import { getCategories } from "@/actions/categories";
+import RecorrentesClient from "./client";
+
+export default async function RecorrentesPage() {
+  const recurringTransactions = await getRecurringTransactions();
+  const categories = await getCategories();
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold">Recorrentes</h2>
-      <p className="mt-2 text-muted-foreground">
-        Gerencie suas despesas e receitas recorrentes.
-      </p>
-    </div>
+    <RecorrentesClient
+      recurringTransactions={recurringTransactions}
+      categories={categories}
+    />
   );
 }
