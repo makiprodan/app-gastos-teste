@@ -2,9 +2,9 @@
 
 > Atualizado ao final de cada sessão.
 
-- **Fase:** Implementação (Fase 4)
+- **Fase:** MVP completo — Validação (Fase 5)
 - **Última sessão:** 2026-02-08
-- **Próxima ação:** Implementar T-005 (CRUD de categorias)
+- **Próxima ação:** Testar o app, revisar e fazer deploy
 
 ## Concluído
 
@@ -16,6 +16,18 @@
 - [x] T-002 — Schema Prisma + migration executada no Neon
 - [x] T-003 — Seed de categorias padrão (primeiro acesso)
 - [x] T-004 — Layout responsivo (sidebar desktop + bottom nav mobile)
+- [x] T-005 — CRUD de categorias
+- [x] T-006 — Criar e listar transações
+- [x] T-007 — Editar e excluir transações
+- [x] T-008 — Dashboard com resumo mensal
+- [x] T-009 — Gráficos do dashboard (pizza + barras)
+- [x] T-010 — CRUD de transações recorrentes
+- [x] T-011 — Geração automática de recorrências (cron + fallback)
+- [x] T-012 — Orçamento por categoria
+- [x] T-013 — Filtros e busca na listagem de transações
+- [x] T-014 — Exportar transações para CSV
+- [x] T-015 — Configurar PWA
+- [x] T-016 — Loading states, empty states e meta tags OG
 
 ## Em Andamento
 
@@ -23,9 +35,9 @@
 
 ## Próximos Passos
 
-1. T-005 — CRUD de categorias
-2. T-006 — Criar e listar transações
-3. T-007 — Editar e excluir transações
+1. Testar o app no celular (responsividade final)
+2. Revisão humana: lógica de negócio
+3. Deploy em produção via Vercel
 
 ## Bloqueios
 
