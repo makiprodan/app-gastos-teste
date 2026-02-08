@@ -2,13 +2,16 @@
 
 > Atualizado ao final de cada sessão.
 
-- **Fase:** Playground
-- **Última sessão:** —
-- **Próxima ação:** Definir ideia do projeto
+- **Fase:** Tasks criadas → próxima: Implementação
+- **Última sessão:** 2026-02-08
+- **Próxima ação:** Implementar T-001 (setup do projeto)
 
 ## Concluído
 
-*Nenhuma etapa concluída.*
+- [x] Playground — ideia definida e amadurecida
+- [x] PRD — requisitos documentados com critérios de aceite
+- [x] Design Doc — arquitetura, modelo de dados, plano de implementação
+- [x] Tasks — 16 tasks atômicas no backlog com critérios de aceite
 
 ## Em Andamento
 
@@ -16,11 +19,7 @@
 
 ## Próximos Passos
 
-1. Definir ideia (Playground)
-2. Gerar PRD
-3. Gerar Design Doc
-4. Criar tasks
-5. Implementar MVP
+1. Implementar MVP (Fase 4) — começar por T-001
 
 ## Bloqueios
 

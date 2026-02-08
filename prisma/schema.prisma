@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TransactionType {
+  EXPENSE
+  INCOME
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  icon        String   @default("circle")
+  color       String   @default("#6b7280")
+  budgetLimit Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  transactions          Transaction[]
+  recurringTransactions RecurringTransaction[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  userId      String
+  categoryId  String
+  type        TransactionType
+  amount      Int
+  description String?
+  date        DateTime
+  isRecurring Boolean         @default(false)
+  recurringId String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  category  Category              @relation(fields: [categoryId], references: [id])
+  recurring RecurringTransaction? @relation(fields: [recurringId], references: [id])
+
+  @@index([userId, date])
+  @@index([userId, categoryId])
+  @@index([userId, type])
+}
+
+model RecurringTransaction {
+  id              String          @id @default(uuid())
+  userId          String
+  categoryId      String
+  type            TransactionType
+  amount          Int
+  description     String?
+  dayOfMonth      Int
+  active          Boolean         @default(true)
+  lastGeneratedAt DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  category     Category      @relation(fields: [categoryId], references: [id])
+  transactions Transaction[]
+
+  @@index([userId, active])
+}

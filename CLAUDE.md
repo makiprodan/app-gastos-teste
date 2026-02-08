@@ -1,8 +1,8 @@
-# [Nome do Projeto]
+# Gastei — Controle de Gastos Pessoais
 
-> [Descrição curta — 1-2 linhas]
+> App pessoal para controlar gastos, receitas, orçamento por categoria e gastos recorrentes. PWA mobile-first.
 
-- **Tipo:** [web app | site | API]
+- **Tipo:** web app (PWA)
 - **Stack:** `docs/stacks.md`
 - **Deploy:** git push → GitHub → Vercel (auto-deploy)
 
